@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {
     Pressable,
     SafeAreaView,
+    View,
     StyleSheet,
     Text,
     Modal,
@@ -11,11 +12,17 @@ import {
 import {UserForm} from "./src/components/UserForm";
 import {User} from "./src/components/User";
 
+import { CompanyForm } from "./src/components/CompanyForm";
+import { Company } from "./src/components/Company";
+
 export default function App() {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalUserForm, setmodalUserForm] = useState(false);
+    const [modalCompanyForm, setmodalCompanyForm] = useState(false);
+    const [modalCompanyList, setmodalCompanyList] = useState(false);
 
     const [usersList, setUsersList] = useState([]);
+    const [companiesList, setCompaniesList] = useState([]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -50,6 +57,20 @@ export default function App() {
                 />
             )}
 
+            <Pressable 
+                style={styles.btnNewUser}
+                onPress={() => setmodalCompanyForm(true)}
+            >
+                <Text style={styles.titleButton}>Companies</Text>
+            </Pressable>
+            
+            <Pressable 
+                style={styles.btnNewUser}
+                onPress={() => setmodalCompanyList(true)}
+            >
+                <Text style={styles.titleButton}>Companies List</Text>
+            </Pressable>
+
             <Modal animationType="slide" visible={modalVisible}>
                 <Text>Modal</Text>
                 
@@ -61,11 +82,42 @@ export default function App() {
                 </Pressable>
             </Modal>
 
+            <Modal animationType="slide" visible={modalCompanyList}>
+                <SafeAreaView style={styles.comapniesListModal}>
+                    <Text style={styles.titleComapniesListModal}>
+                        Companies List
+                    </Text>
+                    <Pressable 
+                        style={styles.btnNewUser}
+                        onPress={() => setmodalCompanyList(false)}
+                    >
+                        <Text style={styles.titleButton}>Close Me</Text>
+                    </Pressable>
+                    {companiesList.length === 0 ? (
+                        <Text style={styles.title}>No hay companias registradas</Text>
+                    ) : (
+                        <SafeAreaView style={styles.companiesContainer}>
+                        <FlatList
+                            data={companiesList}
+                            renderItem={({item}) => <Company compItem={item} />}
+                            keyExtractor={item => item.id}
+                        />
+                        </SafeAreaView>
+                    )}
+                </SafeAreaView>
+            </Modal>
+
             <UserForm 
             userFormVisibility={modalUserForm} 
             setUserFormVisibility={setmodalUserForm} 
             usersList={usersList}
             setUsersList={setUsersList}/>
+
+            <CompanyForm 
+            companyFormVisibility={modalCompanyForm} 
+            setCompanyFormVisibility={setmodalCompanyForm} 
+            companiesList={companiesList}
+            setCompaniesList={setCompaniesList}/>
 
         </SafeAreaView>
     );
@@ -98,5 +150,21 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         color: '#000000',
+    },
+    companiesContainer: {
+        flex: 1,
+        marginTop: 10,
+    },
+    comapniesListModal: {
+        flex: 1,
+        backgroundColor: '#0069a3',
+        justifyContent: 'center',
+        padding: 20,
+    },
+    titleComapniesListModal: {
+        textAlign: 'center',
+        fontSize: 32,
+        fontWeight: '700',
+        color: '#fff',
     },
 });
