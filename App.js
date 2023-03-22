@@ -14,6 +14,7 @@ import {User} from "./src/components/User";
 
 import { CompanyForm } from "./src/components/CompanyForm";
 import { Company } from "./src/components/Company";
+import { CompanyList } from "./src/components/CompanyList";
 
 export default function App() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -45,7 +46,7 @@ export default function App() {
             </Pressable>
 
             {usersList.length === 0 ? (
-                <Text style={styles.textNoUser}>No hay usuarios registrados</Text>
+                <Text style={styles.titleButton}>No hay usuarios registrados</Text>
             ) : (
                 <FlatList
                     data={usersList}
@@ -82,30 +83,7 @@ export default function App() {
                 </Pressable>
             </Modal>
 
-            <Modal animationType="slide" visible={modalCompanyList}>
-                <SafeAreaView style={styles.comapniesListModal}>
-                    <Text style={styles.titleComapniesListModal}>
-                        Companies List
-                    </Text>
-                    <Pressable 
-                        style={styles.btnNewUser}
-                        onPress={() => setmodalCompanyList(false)}
-                    >
-                        <Text style={styles.titleButton}>Close Me</Text>
-                    </Pressable>
-                    {companiesList.length === 0 ? (
-                        <Text style={styles.title}>No hay companias registradas</Text>
-                    ) : (
-                        <SafeAreaView style={styles.companiesContainer}>
-                        <FlatList
-                            data={companiesList}
-                            renderItem={({item}) => <Company compItem={item} />}
-                            keyExtractor={item => item.id}
-                        />
-                        </SafeAreaView>
-                    )}
-                </SafeAreaView>
-            </Modal>
+            <CompanyList modalCompanyList={modalCompanyList} setModalCompanyList={setmodalCompanyList} companiesList={companiesList} ></CompanyList>
 
             <UserForm 
             userFormVisibility={modalUserForm} 
@@ -150,21 +128,5 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         color: '#000000',
-    },
-    companiesContainer: {
-        flex: 1,
-        marginTop: 10,
-    },
-    comapniesListModal: {
-        flex: 1,
-        backgroundColor: '#0069a3',
-        justifyContent: 'center',
-        padding: 20,
-    },
-    titleComapniesListModal: {
-        textAlign: 'center',
-        fontSize: 32,
-        fontWeight: '700',
-        color: '#fff',
     },
 });

@@ -11,6 +11,7 @@ import {
     Pressable,
     Alert
 } from "react-native";
+import DatePicker from 'react-native-date-picker';
 
 export const CompanyForm = (
     {
@@ -24,6 +25,8 @@ export const CompanyForm = (
     const [companyNit, setCompanyNit] = useState("");
     const [companyPhone, setCompanyPhone] = useState("");
     const [companyAddress, setCompanyAddress] = useState("");
+    const [open, setOpen] = useState(false);
+    const [date, setDate] = useState(new Date());
 
     const handleCompany = () => {
         if (
@@ -31,7 +34,8 @@ export const CompanyForm = (
                 companyName, 
                 companyNit,
                 companyPhone, 
-                companyAddress
+                companyAddress,
+                date
             ].includes("")) {
             Alert.alert("Error","Por favor, llena todos los campos");
             return;
@@ -42,7 +46,8 @@ export const CompanyForm = (
             name: companyName,
             nit: companyNit,
             phone: companyPhone,
-            address: companyAddress
+            address: companyAddress,
+            date: date
         };
         setCompaniesList([...companiesList, newCompany]);
         setCompanyFormVisibility(!companyFormVisibility);
@@ -54,6 +59,7 @@ export const CompanyForm = (
         setCompanyNit("");
         setCompanyPhone("");
         setCompanyAddress("");
+        setDate(new Date());
     };
 
     return (
@@ -102,6 +108,26 @@ export const CompanyForm = (
                         placeholderTextColor="#F8F9F9"
                         value={companyAddress}
                         onChangeText={setCompanyAddress}/>
+                    </View>
+                    <View style={styles.campo}>
+                        <Pressable onPress={() => setOpen(true)}>
+                            <Text style={styles.input}>Fecha de inscripcion</Text>
+                        </Pressable>
+                        <DatePicker
+                            modal
+                            style={styles.inputDate}
+                            open={open}
+                            date={date}
+                            mode={"date"}
+                            onDateChange={(date) => setDate(date)}
+                            onConfirm={
+                                (date) => {
+                                    setOpen(false);
+                                    setDate(date);
+                                }
+                            }
+                            onCancel={() => setOpen(false)}
+                        />
                     </View>
                     <Pressable
                     style={styles.btnNewUser}
