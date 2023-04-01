@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {
     Image,
     Modal,
@@ -18,15 +18,34 @@ export const CompanyForm = (
         companyFormVisibility, 
         setCompanyFormVisibility,
         companiesList,
-        setCompaniesList}
+        setCompaniesList,
+        comp: compObj,
+        setComp
+    }
     ) => {
-
+    const [id, setId] = useState("");
     const [companyName, setCompanyName] = useState("");
     const [companyNit, setCompanyNit] = useState("");
     const [companyPhone, setCompanyPhone] = useState("");
     const [companyAddress, setCompanyAddress] = useState("");
-    const [open, setOpen] = useState(false);
     const [date, setDate] = useState(new Date());
+
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        console.log("Entre al useEffect");
+        console.log("info del objeto company" + compObj.nit);
+    
+        if (Object.keys(compObj).length > 0) {
+          console.log("Entre al condicional del useEffect");
+          setId(compObj.id);
+          setCompanyName(compObj.name);
+          setCompanyNit(compObj.nit);
+          setCompanyPhone(compObj.phone);
+          setCompanyAddress(compObj.address);
+          setDate(compObj.date);
+        }
+    }, [compObj]);
 
     const handleCompany = () => {
         if (
@@ -49,8 +68,22 @@ export const CompanyForm = (
             address: companyAddress,
             date: date
         };
-        setCompaniesList([...companiesList, newCompany]);
+
+        if(compObj.nit) {
+            console.log("compObj: ", compObj)
+            newCompany.id = id;
+            const newCompaniesList = companiesList.map((comp) => {
+                if (comp.nit === compObj.nit) {
+                    comp = newCompany;
+                }
+                return comp;
+            });
+            setCompaniesList(newCompaniesList);
+        } else {
+            setCompaniesList([...companiesList, newCompany]);
+        }
         setCompanyFormVisibility(!companyFormVisibility);
+        setComp({});
         emptyFields();
     };
 
@@ -72,7 +105,11 @@ export const CompanyForm = (
                     </Text>
                     <Pressable 
                     style={styles.btnExit}
-                    onPress={()=>setCompanyFormVisibility(false)}>
+                    onPress={()=>{
+                        setCompanyFormVisibility(false);
+                        setComp({});
+                        emptyFields();
+                    }}>
                         <Text style={styles.btnTextExit}>X Cerrar</Text>
                     </Pressable>
                     <View style={styles.campo}>

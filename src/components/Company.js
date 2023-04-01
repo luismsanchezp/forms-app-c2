@@ -6,13 +6,8 @@ import {
   Pressable
 } from 'react-native';
 
-import {CompanyEdit} from './CompanyEdit';
-import {CompanyDelete} from './CompanyDelete';
-
-export const Company = ({compItem}) => {
-  const {name, nit, phone, address, date} = compItem;
-  const [modalEditVisibility, setModalEditVisibility] = useState(false);
-  const [modalDeleteVisibility, setModalDeleteVisibility] = useState(false);
+export const Company = ({compItem, setmodalCompanyForm, editComp}) => {
+  const {id, name, nit, phone, address, date} = compItem;
   const formatDate = (date) => {
     const optionsFormat = {
       weekday: 'long',
@@ -41,22 +36,22 @@ export const Company = ({compItem}) => {
       </View>
       <View style={styles.viewButtons}>
         <Pressable
-        onPress={() => setModalEditVisibility(!modalEditVisibility)} 
+        onPress={() => {
+          setmodalCompanyForm(true)
+          editComp(id)
+          console.log("Company leido por App.js", nit);
+        }} 
         style={styles.editButton}>
           <Text style={styles.editButtonTxt}>Edit</Text>
         </Pressable>
         <Pressable 
-        onPress={() => setModalDeleteVisibility(!modalDeleteVisibility)}
+        onPress={() => {
+          console.log("Company leido por App.js", nit);
+        }}
         style={styles.editButton}>
           <Text style={styles.editButtonTxt}>Delete</Text>
         </Pressable>
       </View>
-      <CompanyEdit 
-      modalEditVisibility={modalEditVisibility} 
-      setModalEditVisibility={setModalEditVisibility}></CompanyEdit>
-      <CompanyDelete 
-      modalDeleteVisibility={modalDeleteVisibility}
-      setModalDeleteVisibility={setModalDeleteVisibility}></CompanyDelete>
     </View>
   )
 }

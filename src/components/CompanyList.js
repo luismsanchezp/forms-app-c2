@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {Company} from './Company';
 
-export const CompanyList = ({modalCompanyList, setModalCompanyList, companiesList}) => {
+export const CompanyList = ({modalCompanyList, setModalCompanyList, companiesList, setmodalCompanyForm, editCompany}) => {
   return (
     <Modal animationType="slide" visible={modalCompanyList}>
         <SafeAreaView style={styles.container}>
@@ -33,7 +33,11 @@ export const CompanyList = ({modalCompanyList, setModalCompanyList, companiesLis
                 <FlatList
                     style={styles.companiesContainer}
                     data={companiesList}
-                    renderItem={({item}) => <Company compItem={item} />}
+                    renderItem={({item}) => 
+                    <Company 
+                    compItem={item} 
+                    setmodalCompanyForm={setmodalCompanyForm} 
+                    editComp={editCompany} />}
                     keyExtractor={(item) => item.id}
                 />
             )}

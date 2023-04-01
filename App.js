@@ -13,7 +13,6 @@ import {UserForm} from "./src/components/UserForm";
 import {User} from "./src/components/User";
 
 import { CompanyForm } from "./src/components/CompanyForm";
-import { Company } from "./src/components/Company";
 import { CompanyList } from "./src/components/CompanyList";
 
 export default function App() {
@@ -24,6 +23,17 @@ export default function App() {
 
     const [usersList, setUsersList] = useState([]);
     const [companiesList, setCompaniesList] = useState([]);
+
+    const [company, setCompany] = useState({});
+
+    const editCompany = (id) => {
+        console.log("Company leido por App.js", id);
+        /* Consultamos en el array de usuarios registrados el id */
+        const editComp = companiesList.filter((comp) => comp.id === id);
+        console.log("El array paciente que el filter obtiene es ", editComp);
+        setCompany(editComp[0]);
+        console.log('No necesitamos el array, sólo el objeto', editComp[0])
+      };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -83,19 +93,29 @@ export default function App() {
                 </Pressable>
             </Modal>
 
-            <CompanyList modalCompanyList={modalCompanyList} setModalCompanyList={setmodalCompanyList} companiesList={companiesList} ></CompanyList>
+            <CompanyList 
+            modalCompanyList={modalCompanyList} 
+            setModalCompanyList={setmodalCompanyList} 
+            companiesList={companiesList} 
+            setmodalCompanyForm={setmodalCompanyForm} 
+            editCompany={editCompany}
+            ></CompanyList>
 
             <UserForm 
             userFormVisibility={modalUserForm} 
             setUserFormVisibility={setmodalUserForm} 
             usersList={usersList}
-            setUsersList={setUsersList}/>
+            setUsersList={setUsersList}
+            />
 
             <CompanyForm 
             companyFormVisibility={modalCompanyForm} 
             setCompanyFormVisibility={setmodalCompanyForm} 
             companiesList={companiesList}
-            setCompaniesList={setCompaniesList}/>
+            setCompaniesList={setCompaniesList}
+            comp={company}
+            setComp={setCompany}
+            />
 
         </SafeAreaView>
     );
