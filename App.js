@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {
     Pressable,
     SafeAreaView,
-    View,
     StyleSheet,
     Text,
     Modal,
