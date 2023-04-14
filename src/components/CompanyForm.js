@@ -34,16 +34,17 @@ export const CompanyForm = (
 
     useEffect(() => {
         console.log("Entre al useEffect");
-        console.log("info del objeto company" + compObj.nit);
-    
         if (Object.keys(compObj).length > 0) {
-          console.log("Entre al condicional del useEffect");
-          setId(compObj.id);
-          setCompanyName(compObj.name);
-          setCompanyNit(compObj.nit);
-          setCompanyPhone(compObj.phone);
-          setCompanyAddress(compObj.address);
-          setDate(compObj.date);
+            console.log("info del objeto company" + compObj.nit);
+            console.log("Entre al condicional del useEffect");
+            setId(compObj.id);
+            setCompanyName(compObj.name);
+            setCompanyNit(compObj.nit);
+            setCompanyPhone(compObj.phone);
+            setCompanyAddress(compObj.address);
+            setDate(compObj.date);
+        } else {
+            emptyFields();
         }
     }, [compObj]);
 
@@ -69,11 +70,11 @@ export const CompanyForm = (
             date: date
         };
 
-        if(compObj.nit) {
+        if(compObj.id) {
             console.log("compObj: ", compObj)
             newCompany.id = id;
             const newCompaniesList = companiesList.map((comp) => {
-                if (comp.nit === compObj.nit) {
+                if (comp.id === compObj.id) {
                     comp = newCompany;
                 }
                 return comp;

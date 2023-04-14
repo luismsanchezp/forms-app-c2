@@ -67,6 +67,21 @@ export default function App() {
                 />
             )}
 
+            {/* {
+                <Text style={
+                    {
+                        color: 'red',
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                    }
+                }>
+                    {company.nit}
+                    {company.name}
+                    {company.address}
+                    {company.phone}
+                </Text>
+            } */}
+
             <Pressable 
                 style={styles.btnNewUser}
                 onPress={() => setmodalCompanyForm(true)}
@@ -96,8 +111,11 @@ export default function App() {
             modalCompanyList={modalCompanyList} 
             setModalCompanyList={setmodalCompanyList} 
             companiesList={companiesList} 
+            setCompaniesList={setCompaniesList}
             setmodalCompanyForm={setmodalCompanyForm} 
             editCompany={editCompany}
+            comp={company}
+            setComp={setCompany}
             ></CompanyList>
 
             <UserForm 
