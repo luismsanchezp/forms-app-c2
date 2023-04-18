@@ -132,6 +132,7 @@ export default function App() {
             setCompaniesList={setCompaniesList}
             comp={company}
             setComp={setCompany}
+            setModalCompanyList={setmodalCompanyList}
             />
 
         </SafeAreaView>

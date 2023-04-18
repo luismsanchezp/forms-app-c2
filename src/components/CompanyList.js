@@ -79,6 +79,7 @@ export const CompanyList = ({
                         setmodalCompanyForm={setmodalCompanyForm} 
                         editComp={editCompany}
                         setConfirmDelete={setConfirmDelete}
+                        setModalCompanyList={setModalCompanyList}
                         />
                     }
                     keyExtractor={(item) => item.id}

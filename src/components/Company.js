@@ -6,7 +6,13 @@ import {
   Pressable
 } from 'react-native';
 
-export const Company = ({compItem, setmodalCompanyForm, editComp, setConfirmDelete}) => {
+export const Company = ({
+  compItem, 
+  setmodalCompanyForm, 
+  editComp, 
+  setConfirmDelete,
+  setModalCompanyList
+}) => {
   const {id, name, nit, phone, address, date} = compItem;
   const formatDate = (date) => {
     const optionsFormat = {
@@ -37,8 +43,9 @@ export const Company = ({compItem, setmodalCompanyForm, editComp, setConfirmDele
       <View style={styles.viewButtons}>
         <Pressable
         onPress={() => {
-          setmodalCompanyForm(true)
-          editComp(id)
+          setModalCompanyList(false);
+          setmodalCompanyForm(true);
+          editComp(id);
           console.log("Company leido por App.js", nit);
         }} 
         style={styles.editButton}>

@@ -20,7 +20,8 @@ export const CompanyForm = (
         companiesList,
         setCompaniesList,
         comp: compObj,
-        setComp
+        setComp,
+        setModalCompanyList
     }
     ) => {
     const [id, setId] = useState("");
@@ -70,6 +71,8 @@ export const CompanyForm = (
             date: date
         };
 
+        var reopenCompaniesList = false;
+
         if(compObj.id) {
             console.log("compObj: ", compObj)
             newCompany.id = id;
@@ -80,10 +83,14 @@ export const CompanyForm = (
                 return comp;
             });
             setCompaniesList(newCompaniesList);
+            reopenCompaniesList = true;
         } else {
             setCompaniesList([...companiesList, newCompany]);
         }
         setCompanyFormVisibility(!companyFormVisibility);
+        if (reopenCompaniesList) {
+            setModalCompanyList(true);
+        }
         setComp({});
         emptyFields();
     };
