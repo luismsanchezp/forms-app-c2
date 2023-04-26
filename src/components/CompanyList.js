@@ -9,6 +9,7 @@ import {
     View
 } from 'react-native';
 import {Company} from './Company';
+import { CompanyListItem } from './CompanyListItem';
 
 export const CompanyList = ({
         modalCompanyList, 
@@ -24,6 +25,7 @@ export const CompanyList = ({
     const [id, setId] = useState("");
     const [companyNit, setCompanyNit] = useState("");
     const [confirmDelete, setConfirmDelete] = useState(false);
+    const [companyInfoModal, setCompanyInfoModal] = useState(false);
     
     useEffect(() => {
         console.log("Entre al useEffect");
@@ -74,18 +76,32 @@ export const CompanyList = ({
                     style={styles.companiesContainer}
                     data={companiesList}
                     renderItem={({item}) => 
-                        <Company 
-                        compItem={item} 
-                        setmodalCompanyForm={setmodalCompanyForm} 
-                        editComp={editCompany}
-                        setConfirmDelete={setConfirmDelete}
-                        setModalCompanyList={setModalCompanyList}
-                        />
+                        <Pressable
+                            onPress={() => {
+                                setComp(item);
+                                setCompanyInfoModal(true);
+                            }
+                        }
+                        >
+                            <CompanyListItem 
+                            compItem={item} 
+                            setmodalCompanyForm={setmodalCompanyForm} 
+                            editComp={editCompany}
+                            setConfirmDelete={setConfirmDelete}
+                            setModalCompanyList={setModalCompanyList}
+                            />
+                        </Pressable>
                     }
                     keyExtractor={(item) => item.id}
                 />
             )}
         </SafeAreaView>
+
+        <Company
+            compItem={compObj}
+            companyInfoModal={companyInfoModal}
+            setCompanyInfoModal={setCompanyInfoModal}
+        />
 
         <Modal
             animationType="fade"

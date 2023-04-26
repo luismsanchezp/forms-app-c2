@@ -3,15 +3,14 @@ import {
   View, 
   StyleSheet, 
   Text, 
-  Pressable
+  Pressable,
+  Modal
 } from 'react-native';
 
 export const Company = ({
-  compItem, 
-  setmodalCompanyForm, 
-  editComp, 
-  setConfirmDelete,
-  setModalCompanyList
+  compItem,
+  companyInfoModal,
+  setCompanyInfoModal
 }) => {
   const {id, name, nit, phone, address, date} = compItem;
   const formatDate = (date) => {
@@ -21,47 +20,47 @@ export const Company = ({
       month: 'long', 
       day: 'numeric'
     };
-    return date.toLocaleDateString('en-US', optionsFormat);
+    if (compItem.date !== undefined) {
+      return date.toLocaleDateString('en-US', optionsFormat);
+    } else {
+      return null;
+    }
   }
   return (
-    <View style={styles.item}>
-      <Text style={styles.title}>{name}</Text>
-      <View style={styles.compDesc}>
-        <Text style={styles.text}>
-          <Text style={styles.textSubtitle}>{"NIT: "}</Text>{nit}
-        </Text>
-        <Text style={styles.text}>
-          <Text style={styles.textSubtitle}>{"Phone Number: "}</Text>{phone}
-        </Text>
-        <Text style={styles.text}>
-          <Text style={styles.textSubtitle}>{"Address: "}</Text>{address}
-        </Text>
-        <Text style={styles.text}>
-          <Text style={styles.textSubtitle}>{"Date: "}</Text>{formatDate(date)}
-        </Text>
+    <Modal
+        animationType="fade"
+        transparent={true}
+        visible={companyInfoModal}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.item}>
+          <Text style={styles.title}>{name}</Text>
+          <View style={styles.compDesc}>
+            <Text style={styles.text}>
+              <Text style={styles.textSubtitle}>{"NIT: "}</Text>{nit}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textSubtitle}>{"Phone Number: "}</Text>{phone}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textSubtitle}>{"Address: "}</Text>{address}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textSubtitle}>{"Date: "}</Text>{formatDate(date)}
+            </Text>
+          </View>
+          <View style={styles.viewButtons}>
+            <Pressable
+            onPress={() => {
+              setCompanyInfoModal(false);
+            }} 
+            style={styles.editButton}>
+              <Text style={styles.editButtonTxt}>Close</Text>
+            </Pressable>
+          </View>
+        </View>
       </View>
-      <View style={styles.viewButtons}>
-        <Pressable
-        onPress={() => {
-          setModalCompanyList(false);
-          setmodalCompanyForm(true);
-          editComp(id);
-          console.log("Company leido por App.js", nit);
-        }} 
-        style={styles.editButton}>
-          <Text style={styles.editButtonTxt}>Edit</Text>
-        </Pressable>
-        <Pressable 
-        onPress={() => {
-          setConfirmDelete(true)
-          editComp(id)
-          console.log("Company leido por App.js", nit);
-        }}
-        style={styles.editButton}>
-          <Text style={styles.editButtonTxt}>Delete</Text>
-        </Pressable>
-      </View>
-    </View>
+    </Modal>
   )
 }
 
@@ -110,4 +109,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#000',
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: 'rgba(0,0,0,0.5)',
+}
 });

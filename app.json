@@ -16,7 +16,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.wolf.myapp"
+      "bundleIdentifier": "com.wolf.myapp",
+      "googleServicesFile": "./ios/GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +26,17 @@
       },
       "package": "com.wolf.myapp"
     },
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/perf",
+      "@react-native-firebase/crashlytics",
+      "expo-build-properties",
+  {
+    "ios": {
+      "useFrameworks": "static"
+    }
+  }
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
     }

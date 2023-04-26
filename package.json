@@ -8,12 +8,15 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^17.4.2",
+    "@react-native-firebase/crashlytics": "^17.4.2",
+    "@react-native-firebase/perf": "^17.4.2",
     "expo": "~48.0.11",
     "expo-splash-screen": "~0.18.1",
+    "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
     "react-native": "0.71.6",
-    "react-native-date-picker": "^4.2.10",
-    "expo-status-bar": "~1.4.4"
+    "react-native-date-picker": "^4.2.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
